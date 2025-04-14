@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Coffe Club Program</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <h1>Mane Bean App</h1>
+  <div id="version">V1.0</div>
+  <button id="Reset" onclick="reset()">Reset</button>
+  <div id="Menu">
+    <button id="Coffee" onclick="addOrder('Coffee', 1.00)">Coffee</button>
+    <!-- To change price or name just change these -->
+    <button id="Mocha" onclick="addOrder('Mocha', 1.50)">Mocha</button>
+    <!-- To change price or name just change these -->
+    <button id="IcedCoffee" onclick="addOrder('Iced Coffee', 1.50)">Iced Coffee</button>
+    <!-- To change price or name just change these -->
+    <button id="HotCocoa" onclick="addOrder('Hot Cocoa', 1.00)">Hot Cocoa</button>
+    <!-- To change price or name just change these -->
+    <button id="IcedMocha" onclick="addOrder('Iced Mocha', 2.00)">Iced Mocha</button>
+    <!-- To change price or name just change these -->
+    <button id="Snack" onclick="addOrder('Snack', 0.50)">Snack</button>
+    <!-- To change price or name just change these -->
+    <button id="Creamer" onclick="addOrder('Extra Creamer', 0.25)">Extra Creamer</button>
+    <!-- To change price or name just change these -->
+    <button id="Syrup" onclick="addOrder('Extra Syrup', 0.25)">Extra Syrup</button>
+    <!-- To change price or name just change these -->
+    
+  </div>
+
+  <div id="Reciept">
+    <h2>Order <label>Ticket:<input type="checkbox" id="ticket"> </label>
+      <div id="RecieptTotal">$0.00</div>
+    </h2>
+    <div id="RecieptList"></div>
+    <button id="RecieptButton" onclick="finishOrder()">Finish Order</button>
+
+    <div id="RecieptItemSample">
+      <div id="RecieptItemName">Iced Coffee</div>
+      <div id="RecieptItemCost">$1.00</div>
+      <button id="removeItem" onclick="removeItem(this)">X</button>
+    </div>
+    <div id="Confirmation">Order Logged</div>
+    <div id="Error">Error Logging Order</div>
+  </div>
+  <div id="DailySummary" style="display:none">
+    <h2>Daily Summary</h2>
+    <textarea id="summaryText" readonly></textarea>
+    <button id="copyButton" onclick="copyToClipboard()">Copy to Clipboard</button>
+    <button id="closeButton" onclick="closeSummary()">Close</button>
+  </div>
+  <button id="DayDone" onclick="compileDay()">Daily Summary</button>
+
+  <div id="Tutorial">
+    <button id="tutorialBtn" onclick="tutorial()">Tutorial</button>
+    <div id="tutorialText">
+      <h3>Tutorial</h3>
+      <div id="tutorialContent">Welcome to the Mane Bean app! Here's a quick tutorial to get you started!</div>
+      <button id="tutorialNextBtn" onclick="nextTutorial()">Next</button>
+      <button id="tutorialCloseBtn" onclick="closeTutorial()">Close</button>
+    </div>
+  </div>
+  
+  <script src="script.js"></script>
+</body>
+
+</html>
