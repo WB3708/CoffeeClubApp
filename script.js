@@ -22,19 +22,22 @@ var ticketSnack = false;
 function addOrder(item, price) {
   console.log("addOrderStarted");
   const ticket = document.getElementById("ticket").checked;
-
-  currentOrder.push({ name: item, cost: price });
+  let isFreeItem = false;
 
   if (ticket === true) {
     if (ticketDrink === false && (item === "Coffee" || item === "Mocha" || item === "Iced Coffee" || item === "Hot Cocoa" || item === "Iced Mocha")) {
       ticketDrink = true;
+      isFreeItem = true;
       price = 0.00;
     }
     if (ticketSnack === false && item === "Snack") {
       ticketSnack = true;
+      isFreeItem = true;
       price = 0.00;
     }
   }
+
+  currentOrder.push({ name: item, cost: price, isTicketItem: isFreeItem });
   
   const clone = itemTemplate.cloneNode(true);
   clone.querySelector("#RecieptItemName").textContent = item;
@@ -54,9 +57,6 @@ function finishOrder() {
   if (currentOrder.length === 0) {
     alert("No items in order");
     return;
-  }
-  if (document.getElementById("ticket").checked === true) {
-    totalCost = 0.00;
   }
   const order = {
     time: now,
@@ -83,9 +83,19 @@ function removeItem(element) {
   totalCost -= cost;
   total.textContent = "$" + totalCost.toFixed(2);
   itemDiv.remove();
+  
   const itemName = itemDiv.querySelector("#RecieptItemName").textContent;
   const index = currentOrder.findIndex(item => item.name === itemName);
+  
   if (index !== -1) {
+    const removedItem = currentOrder[index];
+    if (removedItem.isTicketItem) {
+      if ((itemName === "Coffee" || itemName === "Mocha" || itemName === "Iced Coffee" || itemName === "Hot Cocoa" || itemName === "Iced Mocha")) {
+        ticketDrink = false;
+      } else if (itemName === "Snack") {
+        ticketSnack = false;
+      }
+    }
     currentOrder.splice(index, 1);
   }
 }
@@ -112,13 +122,12 @@ function compileDay() {
     });
     
     summary += `Total: $${order.total.toFixed(2)}\n`;
-    summary += `Ticket: ${order.ticket ? "Yes" : "No"}\n\n`;
+    //summary += `Ticket: ${order.ticket ? "Yes" : "No"}\n\n`;
     
-    if (!order.ticket) {
-      totalRevenue += order.total;
-    } else {
+    if (order.ticket) {
       ticketCount++;
-    }
+    } 
+    totalRevenue += order.total;
   });
 
   summary += `Total Revenue: $${totalRevenue.toFixed(2)}\n`;
